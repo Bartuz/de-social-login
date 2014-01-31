@@ -4,7 +4,7 @@ Donate link: http://developerextensions.com
 Tags: Wordpress Social Login, Wordpress Login, Social Login, login with facebook, login with twitter, login with linkedin, login with google, login with yahoo, login with openid, facebook, twitter, yahoo, linkedin, google, open id
 Requires at least: 3.0
 Tested up to: 3.8.1
-Stable tag: 1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 
 A Simple wordpress plugin which enable the user to login in wordress site with Google/Twitter/OpenId/LinkedIn/Facebook accounts with one click.
@@ -38,7 +38,10 @@ You can also installed directly from the main WordPress Plugin page.
 
 
 == Changelog ==
-= 1.0 =
+= 0.1.1 =
+Plugin name updated in readme
+
+= 0.1.0 =
 Launch DE Social Login
 
 == Screenshots ==
