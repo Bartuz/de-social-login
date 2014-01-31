@@ -1,4 +1,4 @@
-=== Appleicons ===
+=== DE Social Login ===
 Contributors: surinder83singh@gmail.com, sunildhanda
 Donate link: http://developerextensions.com
 Tags: Wordpress Social Login, Wordpress Login, Social Login, login with facebook, login with twitter, login with linkedin, login with google, login with yahoo, login with openid, facebook, twitter, yahoo, linkedin, google, open id
