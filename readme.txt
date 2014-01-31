@@ -22,14 +22,14 @@ For further help contact us at [http://devx.in](http://devx.in) [http://develope
 
 == Installation ==
 
-1. Upload the DeSocialLogin plugin to your plugin directory wp-content/plugins/. 
+1. Upload the DE Social Login plugin to your plugin directory wp-content/plugins/. 
 2. Activate it via the 'Plugins' menu in WordPress.
 3. Fill the required info under Setting->DE Social Login.
 
 You can also installed directly from the main WordPress Plugin page.
 
 1. Go to the Plugins => Add New page.
-2. Enter 'desociallogin' in the textbox and click the 'Search Plugins' button.
+2. Enter 'de-social-login' in the textbox and click the 'Search Plugins' button.
 3. In the list of relevant Plugins click the 'Install' link for Simple Sitemap on the right hand side of the page.
 4. Click the 'Install Now' button on the popup page.
 5. Click 'Activate Plugin' to finish installation.
