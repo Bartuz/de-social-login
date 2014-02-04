@@ -13,7 +13,7 @@ include_once(loginByOpenID_PATH.'yahoo/deLoginByYahoo.php');
 
 add_action( 'login_form', 'wp_de_social_login_form');
 
-function wp_de_social_login_form(){
+function wp_de_social_login_form($is_temp=false){
 	$pluginUrl = loginBySocialID::getPluginUrl();
 	?>
 <style>
@@ -55,12 +55,13 @@ function wp_de_social_login_form(){
 	}
 	
 </style>
+<?php if(!$is_temp){?>
 <p>
 <input type="submit" name="wp-submit" class="button-primary" value="<?php esc_attr_e('Log In'); ?>" tabindex="100" />
 </p>
 <div class="clear  clear2"></div>
+<?php }
 
-<?php 
 	$orderSettings 	= loginBySocialID::getBoxOrders();//var_dump($orderSettings);
 	$orders			= $orderSettings->orders;
 	$boxes			= $orderSettings->boxes;
@@ -125,6 +126,10 @@ function wpLoginBySocialID(){
 			$deLogin->onLogin();
 		}
 	}
+}
+
+function wp_de_render_login_form(){
+	wp_de_social_login_form(true);
 }
 function get_var($key,$default=false){
 	if(isset($_REQUEST[$key])){

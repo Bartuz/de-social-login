@@ -1,7 +1,7 @@
 <?php
 class loginBySocialID{
 	static $loginKey 	= 'SOCIALID';
-	function getBoxOrders(){
+	public static function getBoxOrders(){
 		$orderSettings = new stdClass();
 		$boxes = array(
 			'facebook'=>'Facebook',
@@ -121,7 +121,7 @@ class loginBySocialID{
 		}
 		return $url;
 	}
-	function getPluginUrl(){
+	public static function getPluginUrl(){
 		return plugins_url( '' , __FILE__ );
 	}
 }
