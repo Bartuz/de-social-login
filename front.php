@@ -129,7 +129,16 @@ function wpLoginBySocialID(){
 }
 
 function wp_de_render_login_form(){
-	wp_de_social_login_form(true);
+	if (is_user_logged_in()){
+		global $current_user;
+		
+		$user_info 	= "<span class='display-name'>{$current_user->data->display_name}</span>&nbsp;";
+		$user_info  .= get_avatar( $current_user->ID, 20 );
+		?><div class="user-login">Welcome <b><?php echo $user_info;?></b>&nbsp;|&nbsp;<a href="<?php echo wp_logout_url(); ?>" title="Logout">Logout</a></div><?php
+	}else{
+		wp_de_social_login_form(true);
+	}
+	
 }
 function get_var($key,$default=false){
 	if(isset($_REQUEST[$key])){
