@@ -3,7 +3,7 @@
 Plugin Name: DE Social Login
 Plugin URI: http://Tiddu.com
 Description: A Simple wordpress plugin which enable the user to login in wordress site with Google/Twitter/OpenId/LinkedIn/Facebook accounts with one click.
-Version: 0.1.2
+Version: 0.1.3
 Author: Surinder Singh and Sunil Kumar
 Author URI: http://developerextensions.com
 License:GPL2
