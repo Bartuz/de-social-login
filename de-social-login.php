@@ -8,7 +8,7 @@ Author: Surinder Singh and Sunil Kumar
 Author URI: http://developerextensions.com
 License:GPL2
 */
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 define( 'loginByOpenID_PATH', plugin_dir_path(__FILE__) );
 if (is_admin()){// admin actions
 	include(loginByOpenID_PATH.'admin.php');
