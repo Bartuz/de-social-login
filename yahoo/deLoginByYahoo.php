@@ -73,10 +73,12 @@ class deLoginByYahoo extends loginBySocialID{
 				$response->first_name	= $profile->givenName;
 				$response->last_name	= $profile->familyName;
 				$response->email		= false;
-				foreach($profile->emails as $email){
-					if(isset($email->primary) && $email->primary==true){
-						if(isset($email->handle)){
-							$response->email		= $email->handle;
+				if(isset($profile->emails)){
+					foreach($profile->emails as $email){
+						if(isset($email->primary) && $email->primary==true){
+							if(isset($email->handle)){
+								$response->email		= $email->handle;
+							}
 						}
 					}
 				}
