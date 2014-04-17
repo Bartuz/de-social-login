@@ -525,7 +525,7 @@ abstract class BaseFacebook
    * @return string the signed request, if available, or null otherwise.
    */
   public function getSignedRequest() {
-    if (!$this->signedRequest) {var_dump($this->signedRequest);
+    if (!$this->signedRequest) {
       if ($this->allowSignedRequest && !empty($_REQUEST['signed_request'])) {
         $this->signedRequest = $this->parseSignedRequest(
           $_REQUEST['signed_request']
@@ -564,7 +564,7 @@ abstract class BaseFacebook
   protected function getUserFromAvailableData() {
     // if a signed request is supplied, then it solely determines
     // who the user is.
-    $signed_request = $this->getSignedRequest();var_dump($signed_request);
+    $signed_request = $this->getSignedRequest();
     if ($signed_request) {
       if (array_key_exists('user_id', $signed_request)) {
         $user = $signed_request['user_id'];
