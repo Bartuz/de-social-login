@@ -26,7 +26,7 @@ function wp_de_social_login_form($is_temp=false){
 	}
 	.forgetmenot{
 		position: absolute;
-		top: 165px;
+		top: <?php echo (version_compare(get_bloginfo('version'), '3.8', '<')?'165px':'190px');?>
 	}
 	input.button-openid {
 		width: 150px;
