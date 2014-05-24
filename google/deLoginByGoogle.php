@@ -13,7 +13,12 @@ class deLoginByGoogle extends loginBySocialID{
 		$result = $this->loginByGoogle();
 		if($result->status == 'SUCCESS'){
 			$row = $this->getUserByMail( $result->email);
-			if(!$row){
+			if(!get_option('de_social_login_force_register') && !$row){
+				wp_redirect( site_url().'/wp-login.php?registration=1' );
+				exit();
+			}
+			
+			if(get_option('de_social_login_force_register') && !$row){
 				$this->creatUser($result->username, $result->email);
 				$row = $this->getUserByMail($result->email);
 				update_user_meta($row->ID, 'email', $result->email);
@@ -22,7 +27,7 @@ class deLoginByGoogle extends loginBySocialID{
 				update_user_meta($row->ID, 'deutype', $result->deutype);
 				wp_update_user( array ('ID' => $row->ID, 'display_name' => $result->first_name) ) ;
 			}
-			$this->loginUser($row->ID);	
+			$this->loginUser($row->ID);
 		}
 	}
 	function loginByGoogle(){

@@ -8,6 +8,8 @@ class deSocialLoginSettings {
 	}
 	
 	function deRegisterSocialLoginSettings(){
+		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_force_register');
+		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_force_register_message');
 		//facebook
 		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_facebook_enable');
 		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_facebook_id');
@@ -138,6 +140,7 @@ class deSocialLoginSettings {
 		<?php
 	}
 	function buildSettingMetaboxes(){
+		add_meta_box('de_social_login_metaboxes_gs', 'General Settings', array($this, 'buildSettingMetaboxesGS'), $this->pagehook, 'normal', 'core');
 		add_meta_box('de_social_login_metaboxes_fb', 'Facebook', array($this, 'buildSettingMetaboxesFB'), $this->pagehook, 'normal', 'core');
 		add_meta_box('de_social_login_metaboxes_tw', 'Twitter', array($this, 'buildSettingMetaboxesTW'), $this->pagehook, 'normal', 'core');
 		add_meta_box('de_social_login_metaboxes_google', 'Google', array($this, 'buildSettingMetaboxesGoogle'), $this->pagehook, 'normal', 'core');
@@ -190,6 +193,13 @@ class deSocialLoginSettings {
         <?php submit_button(); ?>
             <div class="clear"></div>
         <?php
+	}
+	function buildSettingMetaboxesGS(){
+		$rows = array(
+			array('label'=>'Force Register','type'=>'checkbox','name'=>'de_social_login_force_register', 'desc'=>'On enable this, plugin will register the user if not exists. Default only already existing users can login.'),
+			array('label'=>'Registration Message','type'=>'text','name'=>'de_social_login_force_register_message', 'desc'=>'This message will be displayed, if <b>Force Register</b> is disable and user not exists.')
+		);
+		$this->buildForm($rows, 'gs');
 	}
 	function buildSettingMetaboxesFB(){
 		$rows = array(
@@ -254,18 +264,17 @@ class deSocialLoginSettings {
 		<?php do_settings_fields($this->pagehook, 'deSocialLoginOptionGroup' ); ?>
 		<table class="form-table">
 		<?php foreach($rows as $row){
-			echo $this->buildRow($row['label'], $row['type'], $row['name']);
+			echo $this->buildRow($row);
 		};?>
 		</table>
 		<?php submit_button(); ?>
 		<div class="clear"></div>
       	<?php
 	}
-	function buildRow($label, $type, $name){
+	function buildRow($args){
 		$html = '<tr>
-                    <th>'.$label.'</th>
-                    <td>'.$this->buildCheckbox($type, $name).'
-                    </td>
+                    <th>'.$args['label'].'</th>
+                    <td>'.$this->buildCheckbox($args['type'], $args['name']).((isset($args['desc']))?'<br><small>'.$args['desc'].'</small>':'').'</td>
                 </tr>';
 		return $html;
 	}

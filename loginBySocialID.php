@@ -26,6 +26,8 @@ class loginBySocialID{
 	}
 	function getOptions(){
 		$options = array();
+		$options['force_register'] 		= get_option('de_social_login_force_register');
+		$options['force_register_message'] 		= get_option('de_social_login_force_register_message');
 		//facebook
 		$options['facebook_key'] 		= get_option('de_social_login_facebook_id');
 		$options['facebook_secret'] 	= get_option('de_social_login_facebook_secret');
@@ -97,17 +99,44 @@ class loginBySocialID{
 		}		
 		if (!$user_id){
 		  return false;
-		}	   
-		wp_clear_auth_cookie();	
+		}
+		wp_clear_auth_cookie();
 		wp_set_auth_cookie($user_id, $remember);	
 		wp_set_current_user($user_id);	
 		return true;
   	}
 	
-	function loginUser($user_id ){
-		$this->set_cookies($user_id);
-		$redirect = site_url();
-		wp_redirect( $redirect );
+	function loginUser($user_id){
+		$reauth = empty($_REQUEST['reauth']) ? false : true;
+		if ( $reauth )
+			wp_clear_auth_cookie();
+		
+		if ( isset( $_REQUEST['redirect_to'] ) ) {
+			$redirect_to = $_REQUEST['redirect_to'];
+			// Redirect to https if user wants ssl
+			if ( $secure_cookie && false !== strpos($redirect_to, 'wp-admin') )
+				$redirect_to = preg_replace('|^http://|', 'https://', $redirect_to);
+		} else {
+			$redirect_to = admin_url();
+		}
+		
+		if ( !$secure_cookie && is_ssl() && force_ssl_login() && !force_ssl_admin() && ( 0 !== strpos($redirect_to, 'https') ) && ( 0 === strpos($redirect_to, 'http') ) )
+		$secure_cookie = false;
+
+		// If cookies are disabled we can't log in even with a valid user+pass
+		if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
+			$user = new WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
+		else
+			$user = wp_signon('', $secure_cookie);
+		
+		if(!$this->set_cookies($user_id)){
+			return false;
+		}
+		
+		$requested_redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : site_url();
+		$redirect_to = apply_filters( 'login_redirect', $redirect_to, $requested_redirect_to, $user );
+		wp_safe_redirect( $redirect_to );
+		exit();
 	}
 	function siteUrl(){
 		return site_url();
