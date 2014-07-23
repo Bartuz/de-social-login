@@ -22,8 +22,8 @@
  */
 use google\appengine\api\app_identity\AppIdentityService;
 
-require_once "Google/Auth/Abstract.php";
-require_once "Google/Http/Request.php";
+require_once loginByOpenID_PATH."google/Auth/Abstract.php";
+require_once loginByOpenID_PATH."google/Http/Request.php";
 
 /**
  * Authentication via the Google App Engine App Identity service.

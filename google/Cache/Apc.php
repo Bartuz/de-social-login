@@ -15,8 +15,8 @@
  * limitations under the License.
  */
  
-require_once "Google/Cache/Abstract.php";
-require_once "Google/Cache/Exception.php";
+require_once loginByOpenID_PATH."google/Cache/Abstract.php";
+require_once loginByOpenID_PATH."google/Cache/Exception.php";
 
 /**
  * A persistent storage class based on the APC cache, which is not

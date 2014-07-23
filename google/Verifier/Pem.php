@@ -15,8 +15,8 @@
  * limitations under the License.
  */
  
-require_once 'Google/Auth/Exception.php';
-require_once 'Google/Verifier/Abstract.php';
+require_once loginByOpenID_PATH."google/Auth/Exception.php";
+require_once loginByOpenID_PATH."google/Verifier/Abstract.php";
 
 /**
  * Verifies signatures using PEM encoded certificates.

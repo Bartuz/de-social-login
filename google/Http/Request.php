@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-require_once 'Google/Utils.php';
+require_once loginByOpenID_PATH."google/Utils.php";
 
 /**
  * HTTP Request to be executed by IO classes. Upon execution, the

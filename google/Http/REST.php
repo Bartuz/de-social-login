@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-require_once 'Google/Client.php';
-require_once 'Google/Http/Request.php';
-require_once 'Google/Service/Exception.php';
-require_once 'Google/Utils/URITemplate.php';
+require_once loginByOpenID_PATH."google/Client.php";
+require_once loginByOpenID_PATH."google/Http/Request.php";
+require_once loginByOpenID_PATH."google/Service/Exception.php";
+require_once loginByOpenID_PATH."google/Utils/URITemplate.php";
 
 /**
  * This class implements the RESTful transport of apiServiceRequest()'s

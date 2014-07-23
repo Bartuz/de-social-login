@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-require_once 'google/Auth/AssertionCredentials.php';
-require_once 'google/Cache/File.php';
-require_once 'google/Cache/Memcache.php';
-require_once 'google/Config.php';
-require_once 'google/Collection.php';
-require_once 'google/Exception.php';
-require_once 'google/IO/Curl.php';
-require_once 'google/IO/Stream.php';
-require_once 'google/Model.php';
-require_once 'google/Service.php';
-require_once 'google/Service/Resource.php';
+require_once loginByOpenID_PATH.'google/Auth/AssertionCredentials.php';
+require_once loginByOpenID_PATH.'google/Cache/File.php';
+require_once loginByOpenID_PATH.'google/Cache/Memcache.php';
+require_once loginByOpenID_PATH.'google/Config.php';
+require_once loginByOpenID_PATH.'google/Collection.php';
+require_once loginByOpenID_PATH.'google/Exception.php';
+require_once loginByOpenID_PATH.'google/IO/Curl.php';
+require_once loginByOpenID_PATH.'google/IO/Stream.php';
+require_once loginByOpenID_PATH.'google/Model.php';
+require_once loginByOpenID_PATH.'google/Service.php';
+require_once loginByOpenID_PATH.'google/Service/Resource.php';
 
 /**
  * The Google API Client

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-require_once "Google/Auth/OAuth2.php";
-require_once "Google/Signer/P12.php";
-require_once "Google/Utils.php";
+require_once loginByOpenID_PATH."google/Auth/OAuth2.php";
+require_once loginByOpenID_PATH."google/Signer/P12.php";
+require_once loginByOpenID_PATH."google/Utils.php";
 
 /**
  * Credentials object used for OAuth 2.0 Signed JWT assertion grants.
