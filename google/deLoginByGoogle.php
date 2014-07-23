@@ -9,7 +9,7 @@
  */
 class deLoginByGoogle extends loginBySocialID{
 	static $loginBy = 'deLoginByGoogle';
-	function onLogin( ){
+	function onLogin(){
 		$result = $this->loginByGoogle();
 		if($result->status == 'SUCCESS'){
 			$row = $this->getUserByMail( $result->email);
@@ -36,39 +36,70 @@ class deLoginByGoogle extends loginBySocialID{
 		$request 	= $_REQUEST;
 		$site 		= $this->siteUrl();
 		$callBackUrl= $this->callBackUrl();
+		$options 	= $this->getOptions();
 		$response 	= new stdClass();
 		$a			= explode('_',$this->get_var(parent::$loginKey));
 		$action		= $a[1];
+		$client_id		= $options['google_client'];
+		$client_secret	= $options['google_secret'];
+		$redirect_uri	= $callBackUrl.parent::$loginKey.'='.self::$loginBy.'_check';
+		
+		$client = new Google_Client;
+		$client->setClientId($client_id);
+		$client->setClientSecret($client_secret);
+		$client->setRedirectUri($redirect_uri);
+		$client->addScope("https://www.googleapis.com/auth/plus.profile.emails.read");
+		$service = new Google_Service_Plus($client);
+		
 		if ($action == 'login'){// Get identity from user and redirect browser to OpenID Server
-			$openid = new deOpenIdGoogle;
-			$openid->SetTrustRoot($site.'index.php' );
-			if ($openid->GetOpenIDServer()){
-				$openid->SetCancelURL($callBackUrl.parent::$loginKey.'='.self::$loginBy.'_check');	   
-				$openid->SetApprovedURL($callBackUrl.parent::$loginKey.'='.self::$loginBy.'_check');  	// Send Response from OpenID server to this script
-				$openid->Redirect();// This will redirect user to OpenID Server				
+			//$client->SetTrustRoot($site.'index.php' );
+			if(!(isset($_SESSION['access_token']) && $_SESSION['access_token'])){
+				$authUrl = $client->createAuthUrl();
+				$this->redirect($authUrl);
+				die();
+			}else{
+				$this->redirect($redirect_uri);
+				die();
+			}
+			/*else{
+				$client->setAccessToken($_SESSION['access_token']);
+				$user	= $service->people->get("me");
 			}else{
 				$error = $openid->GetError();			
 				$response->status = 'ERROR';
 				$response->error_code 	= $error['code'];
 				$response->error_message = $error['description'];
-			}		
-		}elseif($get['openid_mode'] == 'id_res'){ 	// Perform HTTP Request to OpenID server to validate key
-			$openid = new deOpenIdGoogle;
-			$openid->SetIdentity($get['openid_identity']);
-			$openid_validation_result = $openid->ValidateWithServer();
-			if($openid_validation_result == true){ 		// OK HERE KEY IS VALID
-				$response->email    	= $get['openid_ext1_value_email'];
-				$response->username 	= $get['openid_ext1_value_email'];
-				$response->first_name	= array_shift(explode('@',$get['openid_ext1_value_email']));
-				$response->deuid		= $get['openid_ext1_value_email'];
-				$response->deutype		= 'google';
-				$response->status   	= 'SUCCESS';
-				$response->error_message = '';				
-			}elseif($openid->IsError() == true){// ON THE WAY, WE GOT SOME ERROR
-				$error = $openid->GetError();
-				$response->status = 'ERROR';
-				$response->error_code 	= $error['code'];
-				$response->error_message = $error['description'];
+			}*/		
+		}elseif(isset($_GET['code'])){ 	// Perform HTTP Request to OpenID server to validate key
+			$client->authenticate($_GET['code']);
+			$_SESSION['access_token'] 	= $client->getAccessToken();
+			$this->redirect($redirect_uri);
+			die();
+			//$redirect 					= 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+			//header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
+		}elseif(isset($_SESSION['access_token']) && $_SESSION['access_token']){
+			$client->setAccessToken($_SESSION['access_token']);
+			try{
+				$user	= $service->people->get("me", array());
+			}catch(Exception $fault){
+				unset($_SESSION['access_token']);
+				$this->redirect($callBackUrl.parent::$loginKey.'='.self::$loginBy.'_login');
+				die();
+			}
+			if(!empty($user)){// OK HERE KEY IS VALID
+				if(!empty($user->emails)){
+					$response->email    	= $user->emails[0]->value;
+					$response->username 	= $user->emails[0]->value;
+					$response->first_name	= $user->name->givenName;
+					$response->deuid		= $user->emails[0]->value;
+					$response->deutype		= 'google';
+					$response->status   	= 'SUCCESS';
+					$response->error_message = '';
+				}else{
+					$response->status = 'ERROR';
+					$response->error_code 	= 2;
+					$response->error_message = "INVALID AUTHORIZATION";
+				}
 			}else{// Signature Verification Failed
 				$response->status = 'ERROR';
 				$response->error_code 	= 2;

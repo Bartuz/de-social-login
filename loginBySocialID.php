@@ -28,6 +28,9 @@ class loginBySocialID{
 		$options = array();
 		$options['force_register'] 		= get_option('de_social_login_force_register');
 		$options['force_register_message'] 		= get_option('de_social_login_force_register_message');
+		//google
+		$options['google_client'] 		= get_option('de_social_login_google_client');
+		$options['google_secret'] 		= get_option('de_social_login_google_secret');
 		//facebook
 		$options['facebook_key'] 		= get_option('de_social_login_facebook_id');
 		$options['facebook_secret'] 	= get_option('de_social_login_facebook_secret');

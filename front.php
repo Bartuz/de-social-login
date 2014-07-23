@@ -1,7 +1,10 @@
 <?php
+set_include_path(dirname(__FILE__).'/'. PATH_SEPARATOR . get_include_path());
 include_once(loginByOpenID_PATH.'loginBySocialID.php');
 include_once loginByOpenID_PATH.'twitter/OAuth.php';
-include_once(loginByOpenID_PATH.'google/deOpenIdGoogle.php');
+//include_once(loginByOpenID_PATH.'google/deOpenIdGoogle.php');
+include_once(loginByOpenID_PATH.'google/Client.php');
+include_once(loginByOpenID_PATH.'google/Service/Plus.php');
 include_once(loginByOpenID_PATH.'google/deLoginByGoogle.php');
 include_once(loginByOpenID_PATH.'openid/deOpenIdOpenID.php');
 include_once(loginByOpenID_PATH.'openid/deLoginByOpenID.php');

@@ -20,6 +20,8 @@ class deSocialLoginSettings {
 		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_twitter_secret');
 		//google
 		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_google_enable');
+		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_google_client');
+		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_google_secret');
 		//openid
 		register_setting( 'deSocialLoginOptionGroup', 'de_social_login_openid_enable');
 		//linkedin
@@ -219,7 +221,9 @@ class deSocialLoginSettings {
 	}
 	function buildSettingMetaboxesGoogle(){
 		$rows = array(
-			array('label'=>'Enable/Disable','type'=>'checkbox','name'=>'de_social_login_google_enable')
+			array('label'=>'Enable/Disable','type'=>'checkbox','name'=>'de_social_login_google_enable'),
+			array('label'=>'Client ID','type'=>'text','name'=>'de_social_login_google_client'),
+			array('label'=>'Client Secret','type'=>'text','name'=>'de_social_login_google_secret'),
 		);
 		$this->buildForm($rows, 'google');
 	}

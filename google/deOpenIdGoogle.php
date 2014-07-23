@@ -11,7 +11,7 @@ class deOpenIdGoogle{
 	var $openid_ns    		 = 'http://specs.openid.net/auth/2.0';
 	var $realm        		 = '';
 	function SimpleOpenID(){
-		if (!function_exists('curl_exec')) {
+		if (!function_exists('curl_exec')){
 			die('Error: Class SimpleOpenID requires curl extension to work');
 		}
 	}
