@@ -109,6 +109,10 @@ class deLoginByGoogle extends loginBySocialID{
 			$response->status = 'ERROR';
 			$response->error_code 	= 1;
 			$response->error_message = "USER CANCELED REQUEST";
+		}else{ // User failed to login
+			$response->status = 'ERROR';
+			$response->error_code 	= 3;
+			$response->error_message = "USER LOGIN FAIL";
 		}
 		return $response;
 	}

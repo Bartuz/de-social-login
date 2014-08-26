@@ -130,6 +130,7 @@ function wpLoginBySocialID(){
 	}
 }
 
+add_shortcode('WPDE_LOGIN_FORM', 'wp_de_render_login_form');
 function wp_de_render_login_form(){
 	if (is_user_logged_in()){
 		global $current_user;
